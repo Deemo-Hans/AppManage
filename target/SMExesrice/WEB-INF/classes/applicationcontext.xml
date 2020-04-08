@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	 http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	  http://www.springframework.org/schema/context
+	 http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	  http://www.springframework.org/schema/mvc
+	 http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+	 http://www.springframework.org/schema/aop
+	 http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+	 http://www.springframework.org/schema/tx
+	 http://www.springframework.org/schema/tx/spring-tx-4.3.xsd"
+
+
+>
+	<!-->扫描注解配置-->
+	<context:component-scan base-package="com.appmanage"></context:component-scan>
+<!--	整合mybatis-->
+	<!--	使用properties文件保存jdbc数据-->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!--	创建数据源-->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.drive}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	<!--spring的事务支持配置-->
+	<!--配置注解事务支持-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 注解方式配置事物    Aop-->
+    <tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager"></tx:annotation-driven>
+<!--	定义sqlsession工厂,读取配置文件-->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:Mybatis-config.xml"></property>
+	</bean>
+	<!--spring整合mybatis-->
+	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="basePackage" value="com.appmanage.mapper"></property>
+	</bean>
+	<!--	整合mybatis 结束-->
+<!--	参考用模板-->
+<!--&lt;!&ndash;   配置用户控制器的参考&ndash;&gt;
+&lt;!&ndash;创建bean对象&ndash;&gt;
+	<bean id="students" class="com.kgc.k9510.entity.Students" p:xh="101" p:name="张三" p:gender="男" p:address-ref="address" >
+		<property name="tels">
+			<list>
+				<value>11111111111</value>
+				<value>11111111111</value>
+				<value>11111111111</value>
+			</list>
+		</property>
+		<property name="grade">
+			<map>
+				<entry key="语文" value="100"></entry>
+				<entry key="数学" value="100"></entry>
+				<entry key="英语" value="100"></entry>
+			</map>
+		</property>
+		&lt;!&ndash;设置set集合&ndash;&gt;
+		<property name="testSet">
+			<set>
+				<value>set1</value>
+				<value>set2</value>
+				<value>set3</value>
+			</set>
+		</property>
+	</bean>
+&lt;!&ndash;配置增强方法&ndash;&gt;
+	<bean id="s" class="com.kgc.k9510.aop.ZengQiang"></bean>
+&lt;!&ndash;定义切入的方法&ndash;&gt;
+	<aop:config>
+		<aop:pointcut id="pointcut" expression="execution(public void show())"/>
+		<aop:advisor advice-ref="s" pointcut-ref="pointcut"></aop:advisor>
+	</aop:config>
+	&lt;!&ndash;扫描注解配置&ndash;&gt;
+	<context:component-scan base-package="com.team.entity"></context:component-scan>-->
+
+	<!--	整合mybatis-->
+	<!--	创建数据源-->
+<!--	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/k9510?characterEncoding=utf-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="199388"></property>
+	</bean>
+	&lt;!&ndash;	定义sqlsession工厂,读取配置文件&ndash;&gt;
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="Mybatis-config.xml"></property>
+	</bean>
+	&lt;!&ndash;spring整合mybatis&ndash;&gt;
+	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="basePackage" value="com.team.ssm.mapper"></property>
+	</bean>
+	&lt;!&ndash;	整合mybatis 结束&ndash;&gt;-->
+<!--	参考用模板 结束-->
+</beans>

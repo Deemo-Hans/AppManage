@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.appmanage.mapper.AppInfoMapper">
+  <resultMap id="BaseResultMap" type="com.appmanage.entity.AppInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="softwareName" jdbcType="VARCHAR" property="softwarename" />
+    <result column="APKName" jdbcType="VARCHAR" property="apkname" />
+    <result column="supportROM" jdbcType="VARCHAR" property="supportrom" />
+    <result column="interfaceLanguage" jdbcType="VARCHAR" property="interfacelanguage" />
+    <result column="softwareSize" jdbcType="DECIMAL" property="softwaresize" />
+    <result column="updateDate" jdbcType="DATE" property="updatedate" />
+    <result column="devId" jdbcType="BIGINT" property="devid" />
+    <result column="appInfo" jdbcType="VARCHAR" property="appinfo" />
+    <result column="status" jdbcType="BIGINT" property="status" />
+    <result column="onSaleDate" jdbcType="TIMESTAMP" property="onsaledate" />
+    <result column="offSaleDate" jdbcType="TIMESTAMP" property="offsaledate" />
+    <result column="flatformId" jdbcType="BIGINT" property="flatformid" />
+    <result column="categoryLevel3" jdbcType="BIGINT" property="categorylevel3" />
+    <result column="downloads" jdbcType="BIGINT" property="downloads" />
+    <result column="createdBy" jdbcType="BIGINT" property="createdby" />
+    <result column="creationDate" jdbcType="TIMESTAMP" property="creationdate" />
+    <result column="modifyBy" jdbcType="BIGINT" property="modifyby" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
+    <result column="categoryLevel1" jdbcType="BIGINT" property="categorylevel1" />
+    <result column="categoryLevel2" jdbcType="BIGINT" property="categorylevel2" />
+    <result column="logoPicPath" jdbcType="VARCHAR" property="logopicpath" />
+    <result column="logoLocPath" jdbcType="VARCHAR" property="logolocpath" />
+    <result column="versionId" jdbcType="BIGINT" property="versionid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, softwareName, APKName, supportROM, interfaceLanguage, softwareSize, updateDate, 
+    devId, appInfo, status, onSaleDate, offSaleDate, flatformId, categoryLevel3, downloads, 
+    createdBy, creationDate, modifyBy, modifyDate, categoryLevel1, categoryLevel2, logoPicPath, 
+    logoLocPath, versionId
+  </sql>
+  <select id="selectByExample" parameterType="com.appmanage.entity.AppInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from app_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from app_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.appmanage.entity.AppInfo">
+    insert into app_info (id, softwareName, APKName, 
+      supportROM, interfaceLanguage, softwareSize, 
+      updateDate, devId, appInfo, 
+      status, onSaleDate, offSaleDate, 
+      flatformId, categoryLevel3, downloads, 
+      createdBy, creationDate, modifyBy, 
+      modifyDate, categoryLevel1, categoryLevel2, 
+      logoPicPath, logoLocPath, versionId
+      )
+    values (#{id,jdbcType=BIGINT}, #{softwarename,jdbcType=VARCHAR}, #{apkname,jdbcType=VARCHAR}, 
+      #{supportrom,jdbcType=VARCHAR}, #{interfacelanguage,jdbcType=VARCHAR}, #{softwaresize,jdbcType=DECIMAL}, 
+      #{updatedate,jdbcType=DATE}, #{devid,jdbcType=BIGINT}, #{appinfo,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIGINT}, #{onsaledate,jdbcType=TIMESTAMP}, #{offsaledate,jdbcType=TIMESTAMP}, 
+      #{flatformid,jdbcType=BIGINT}, #{categorylevel3,jdbcType=BIGINT}, #{downloads,jdbcType=BIGINT}, 
+      #{createdby,jdbcType=BIGINT}, #{creationdate,jdbcType=TIMESTAMP}, #{modifyby,jdbcType=BIGINT}, 
+      #{modifydate,jdbcType=TIMESTAMP}, #{categorylevel1,jdbcType=BIGINT}, #{categorylevel2,jdbcType=BIGINT}, 
+      #{logopicpath,jdbcType=VARCHAR}, #{logolocpath,jdbcType=VARCHAR}, #{versionid,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.appmanage.entity.AppInfo">
+    insert into app_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="softwarename != null">
+        softwareName,
+      </if>
+      <if test="apkname != null">
+        APKName,
+      </if>
+      <if test="supportrom != null">
+        supportROM,
+      </if>
+      <if test="interfacelanguage != null">
+        interfaceLanguage,
+      </if>
+      <if test="softwaresize != null">
+        softwareSize,
+      </if>
+      <if test="updatedate != null">
+        updateDate,
+      </if>
+      <if test="devid != null">
+        devId,
+      </if>
+      <if test="appinfo != null">
+        appInfo,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="onsaledate != null">
+        onSaleDate,
+      </if>
+      <if test="offsaledate != null">
+        offSaleDate,
+      </if>
+      <if test="flatformid != null">
+        flatformId,
+      </if>
+      <if test="categorylevel3 != null">
+        categoryLevel3,
+      </if>
+      <if test="downloads != null">
+        downloads,
+      </if>
+      <if test="createdby != null">
+        createdBy,
+      </if>
+      <if test="creationdate != null">
+        creationDate,
+      </if>
+      <if test="modifyby != null">
+        modifyBy,
+      </if>
+      <if test="modifydate != null">
+        modifyDate,
+      </if>
+      <if test="categorylevel1 != null">
+        categoryLevel1,
+      </if>
+      <if test="categorylevel2 != null">
+        categoryLevel2,
+      </if>
+      <if test="logopicpath != null">
+        logoPicPath,
+      </if>
+      <if test="logolocpath != null">
+        logoLocPath,
+      </if>
+      <if test="versionid != null">
+        versionId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="softwarename != null">
+        #{softwarename,jdbcType=VARCHAR},
+      </if>
+      <if test="apkname != null">
+        #{apkname,jdbcType=VARCHAR},
+      </if>
+      <if test="supportrom != null">
+        #{supportrom,jdbcType=VARCHAR},
+      </if>
+      <if test="interfacelanguage != null">
+        #{interfacelanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="softwaresize != null">
+        #{softwaresize,jdbcType=DECIMAL},
+      </if>
+      <if test="updatedate != null">
+        #{updatedate,jdbcType=DATE},
+      </if>
+      <if test="devid != null">
+        #{devid,jdbcType=BIGINT},
+      </if>
+      <if test="appinfo != null">
+        #{appinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIGINT},
+      </if>
+      <if test="onsaledate != null">
+        #{onsaledate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offsaledate != null">
+        #{offsaledate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flatformid != null">
+        #{flatformid,jdbcType=BIGINT},
+      </if>
+      <if test="categorylevel3 != null">
+        #{categorylevel3,jdbcType=BIGINT},
+      </if>
+      <if test="downloads != null">
+        #{downloads,jdbcType=BIGINT},
+      </if>
+      <if test="createdby != null">
+        #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="creationdate != null">
+        #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        #{modifyby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null">
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categorylevel1 != null">
+        #{categorylevel1,jdbcType=BIGINT},
+      </if>
+      <if test="categorylevel2 != null">
+        #{categorylevel2,jdbcType=BIGINT},
+      </if>
+      <if test="logopicpath != null">
+        #{logopicpath,jdbcType=VARCHAR},
+      </if>
+      <if test="logolocpath != null">
+        #{logolocpath,jdbcType=VARCHAR},
+      </if>
+      <if test="versionid != null">
+        #{versionid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.appmanage.entity.AppInfo">
+    update app_info
+    <set>
+      <if test="softwarename != null">
+        softwareName = #{softwarename,jdbcType=VARCHAR},
+      </if>
+      <if test="apkname != null">
+        APKName = #{apkname,jdbcType=VARCHAR},
+      </if>
+      <if test="supportrom != null">
+        supportROM = #{supportrom,jdbcType=VARCHAR},
+      </if>
+      <if test="interfacelanguage != null">
+        interfaceLanguage = #{interfacelanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="softwaresize != null">
+        softwareSize = #{softwaresize,jdbcType=DECIMAL},
+      </if>
+      <if test="updatedate != null">
+        updateDate = #{updatedate,jdbcType=DATE},
+      </if>
+      <if test="devid != null">
+        devId = #{devid,jdbcType=BIGINT},
+      </if>
+      <if test="appinfo != null">
+        appInfo = #{appinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIGINT},
+      </if>
+      <if test="onsaledate != null">
+        onSaleDate = #{onsaledate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offsaledate != null">
+        offSaleDate = #{offsaledate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flatformid != null">
+        flatformId = #{flatformid,jdbcType=BIGINT},
+      </if>
+      <if test="categorylevel3 != null">
+        categoryLevel3 = #{categorylevel3,jdbcType=BIGINT},
+      </if>
+      <if test="downloads != null">
+        downloads = #{downloads,jdbcType=BIGINT},
+      </if>
+      <if test="createdby != null">
+        createdBy = #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="creationdate != null">
+        creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        modifyBy = #{modifyby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null">
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categorylevel1 != null">
+        categoryLevel1 = #{categorylevel1,jdbcType=BIGINT},
+      </if>
+      <if test="categorylevel2 != null">
+        categoryLevel2 = #{categorylevel2,jdbcType=BIGINT},
+      </if>
+      <if test="logopicpath != null">
+        logoPicPath = #{logopicpath,jdbcType=VARCHAR},
+      </if>
+      <if test="logolocpath != null">
+        logoLocPath = #{logolocpath,jdbcType=VARCHAR},
+      </if>
+      <if test="versionid != null">
+        versionId = #{versionid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.appmanage.entity.AppInfo">
+    update app_info
+    set softwareName = #{softwarename,jdbcType=VARCHAR},
+      APKName = #{apkname,jdbcType=VARCHAR},
+      supportROM = #{supportrom,jdbcType=VARCHAR},
+      interfaceLanguage = #{interfacelanguage,jdbcType=VARCHAR},
+      softwareSize = #{softwaresize,jdbcType=DECIMAL},
+      updateDate = #{updatedate,jdbcType=DATE},
+      devId = #{devid,jdbcType=BIGINT},
+      appInfo = #{appinfo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIGINT},
+      onSaleDate = #{onsaledate,jdbcType=TIMESTAMP},
+      offSaleDate = #{offsaledate,jdbcType=TIMESTAMP},
+      flatformId = #{flatformid,jdbcType=BIGINT},
+      categoryLevel3 = #{categorylevel3,jdbcType=BIGINT},
+      downloads = #{downloads,jdbcType=BIGINT},
+      createdBy = #{createdby,jdbcType=BIGINT},
+      creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      modifyBy = #{modifyby,jdbcType=BIGINT},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      categoryLevel1 = #{categorylevel1,jdbcType=BIGINT},
+      categoryLevel2 = #{categorylevel2,jdbcType=BIGINT},
+      logoPicPath = #{logopicpath,jdbcType=VARCHAR},
+      logoLocPath = #{logolocpath,jdbcType=VARCHAR},
+      versionId = #{versionid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--自定义部分-->
+  <!--后台管理查询-->
+  <select id="selectManageMain" parameterType="com.appmanage.entity.SelectAPPInfo" resultType="com.appmanage.entity.AppInfo">
+    SELECT id,softwareName,APKName,softwareSize,(SELECT valueName FROM data_dictionary where typeCode='APP_FLATFORM' AND valueId=`flatformId`)as v_flatformId,(SELECT categoryName FROM app_category WHERE id=categoryLevel1)as v_categoryLevel1,(SELECT categoryName FROM app_category WHERE id=categoryLevel2)as v_categoryLevel2,(SELECT categoryName FROM app_category WHERE id=categoryLevel3)as v_categoryLevel3,(SELECT valueName FROM data_dictionary where typeCode='APP_STATUS' AND valueId=`status`)as v_status,downloads,(SELECT versionInfo FROM app_version where app_version.id=app_info.versionId AND app_info.id=app_version.appId)as v_versionid,status FROM app_info where devId=#{devId}
+    <if test="softwareName!=null">
+        and softwareName like concat('%',#{softwareName},'%')
+    </if>
+    <if test="status!=null">
+      and status=#{status}
+    </if>
+    <if test="flatformId!=null">
+      and flatformId=#{flatformId}
+    </if>
+    <if test="categoryLevel1!=null">
+      and categoryLevel1=#{categoryLevel1}
+    </if>
+    <if test="categoryLevel2!=null">
+      and categoryLevel2=#{categoryLevel2}
+    </if>
+    <if test="categoryLevel3!=null">
+      and categoryLevel3=#{categoryLevel3}
+    </if>
+  </select>
+  <!--后台管理查询结束-->
+  <!--单条信息查询-->
+  <select id="selectOne" parameterType="java.lang.Long" resultType="com.appmanage.entity.AppInfo">
+    SELECT id,softwareName,APKName,softwareSize,(SELECT valueName FROM data_dictionary where typeCode='APP_FLATFORM' AND valueId=`flatformId`)as v_flatformId,(SELECT categoryName FROM app_category WHERE id=categoryLevel1)as v_categoryLevel1,(SELECT categoryName FROM app_category WHERE id=categoryLevel2)as v_categoryLevel2,(SELECT categoryName FROM app_category WHERE id=categoryLevel3)as v_categoryLevel3,(SELECT valueName FROM data_dictionary where typeCode='APP_STATUS' AND valueId=`status`)as v_status,downloads,(SELECT versionInfo FROM app_version where app_version.id=app_info.versionId AND app_info.id=app_version.appId)as v_versionid,status,
+    supportrom,interfacelanguage,appinfo
+     FROM app_info where id=#{id}
+  </select>
+  <!--单条信息查询结束-->
+</mapper>

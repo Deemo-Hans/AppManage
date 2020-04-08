@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	 http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	  http://www.springframework.org/schema/context
+	 http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	  http://www.springframework.org/schema/mvc
+	 http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+	">
+   <!--配置用户控制器的-->
+	<context:component-scan base-package="com.appmanage.controller"></context:component-scan>
+<!--视图解析器-->
+	<bean id="ViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	<!--mvc类型转化时支持注解转换-->
+	<mvc:annotation-driven></mvc:annotation-driven>
+<!--	<mvc:annotation-driven>
+		<mvc:message-converters>
+			&lt;!&ndash;解决@responsebody响应中文乱码&ndash;&gt;
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8"/>
+			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+		</mvc:message-converters>
+	</mvc:annotation-driven>-->
+<!--	静态资源放行-->
+	<mvc:resources mapping="/statics/**" location="/statics/"></mvc:resources>
+
+	<!--添加上传文件的支持-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="maxUploadSize" value="5242880"/> <!-- 5M -->
+	</bean>
+</beans>

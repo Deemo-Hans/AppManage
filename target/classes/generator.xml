@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+<!--    使用的jdbc包 为了方便放在了D盘根目录-->
+    <classPathEntry location="D:\mysql-connector-java-5.1.25.jar"/>
+
+    <context id="Mysql2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"></property>
+            <property name="suppressAllComments" value="true"></property>
+        </commentGenerator>
+<!--JDBC连接参数-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/appinfodb?characterEncoding=utf-8"
+                        userId="root"
+                        password="199388">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+<!--targetPackage=包路径(实体类) targetProject=文件路径(用来指定到项目的包路径是是哪个文件下的)-->
+        <javaModelGenerator targetPackage="com.appmanage.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--targetPackage=包路径(Dao层mapper) targetProject=文件路径(用来指定到项目的包路径是是哪个文件下的)-->
+        <sqlMapGenerator targetPackage="com.appmanage.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--targetPackage=包路径(Dao层mapper) targetProject=文件路径(用来指定到项目的包路径是是哪个文件下的)-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.appmanage.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+<!--以下内容是反向哪些表，可以打开SelectByExample开关生成条件查询-->
+        <table tableName="ad_promotion" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+        </table>
+        <table tableName="app_category" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+        </table>
+        <table tableName="app_info" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+        </table>
+        <table tableName="app_version" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+        </table>
+        <table tableName="backend_user" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+        </table>
+        <table tableName="data_dictionary" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+        </table>
+        <table tableName="dev_user" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false">
+        </table>
+    </context>
+</generatorConfiguration>
